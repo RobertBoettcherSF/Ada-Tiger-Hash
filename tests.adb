@@ -2,6 +2,8 @@ with Ada.Text_IO; use Ada.Text_IO;
 with Tiger_Hash;  use Tiger_Hash;
 
 procedure Tests is
+   use type Byte;
+
    Pass_Count : Natural := 0;
    Fail_Count : Natural := 0;
 
@@ -27,7 +29,7 @@ procedure Tests is
    end To_Bytes;
 
    -- Empty array constant for reuse
-   Empty_Array : constant Byte_Array (1 .. 0) := (others => 0);
+   Empty_Array : constant Byte_Array (1 .. 0) := [others => 0];
 
 begin
    Put_Line ("TEST 1 — Empty Input Constraints (Tiger)");
@@ -130,7 +132,7 @@ begin
 
    Put_Line ("TEST 11 — Large Payload Stability");
    declare
-      B_Large : Byte_Array (0 .. 1023) := (others => 42);
+      B_Large : Byte_Array (0 .. 1023) := [others => 42];
    begin
       Check ("11.1 Stream blocks properly consumed", Tiger_192 (B_Large)'Length = 24);
       Check ("11.2 Valid payload invariant", Tiger_192 (B_Large) = Tiger_192 (B_Large));
