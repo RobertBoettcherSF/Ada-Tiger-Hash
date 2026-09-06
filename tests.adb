@@ -132,7 +132,7 @@ begin
 
    Put_Line ("TEST 11 — Large Payload Stability");
    declare
-      B_Large : Byte_Array (0 .. 1023) := [others => 42];
+      B_Large : constant Byte_Array (0 .. 1023) := [others => 42];
    begin
       Check ("11.1 Stream blocks properly consumed", Tiger_192 (B_Large)'Length = 24);
       Check ("11.2 Valid payload invariant", Tiger_192 (B_Large) = Tiger_192 (B_Large));
@@ -157,6 +157,7 @@ begin
       begin
          declare
             Bad_Length_Result : Byte_Array := Tiger_Custom (Empty_Array, 25);
+            pragma Unreferenced (Bad_Length_Result);
          begin
             null;
          end;
