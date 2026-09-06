@@ -1,4 +1,5 @@
 package body Tiger_Hash is
+   use type Interfaces.Unsigned_64;
 
    type S_Box_Array is array (1 .. 4, Byte) of Word64;
    type Word64_Array is array (0 .. 7) of Word64;
@@ -74,7 +75,7 @@ package body Tiger_Hash is
       B : Word64 := 16#FEDCBA9876543210#;
       C : Word64 := 16#F096A5B4C3B2E187#;
 
-      Result : Byte_Array (0 .. 23) := (others => 0);
+      Result : Byte_Array (0 .. 23) := [others => 0];
 
       procedure Round (R_A, R_B, R_C : in out Word64; R_X : Word64; Mul : Word64) is
       begin
@@ -162,7 +163,7 @@ package body Tiger_Hash is
       end loop;
 
       -- Phase 2: Create padded block(s)
-      Block := (others => 0);
+      Block := [others => 0];
       if Remaining > 0 then
          for I in 0 .. Remaining - 1 loop
             Block (I) := Message (Index + I);
@@ -173,7 +174,7 @@ package body Tiger_Hash is
       -- If no room for the 64-bit length, flush the current block and start a new one
       if Remaining >= 56 then
          Process_Block (Block);
-         Block := (others => 0);
+         Block := [others => 0];
       end if;
 
       -- Append length in bits as a 64-bit little-endian integer
