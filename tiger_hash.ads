@@ -1,7 +1,6 @@
 with Interfaces;
 
 package Tiger_Hash is
-   pragma Preelaborate;
 
    -- Standard domain types for the hash implementation
    subtype Word64 is Interfaces.Unsigned_64;
